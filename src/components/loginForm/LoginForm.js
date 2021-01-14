@@ -9,7 +9,7 @@ import './Styles.scss';
 
 const LoginForm = () => {
 
-  const icon = <FontAwesomeIcon icon={faDoorOpen} />
+  const iconDoor = <FontAwesomeIcon icon={faDoorOpen} size="2x" />
 
   return (
     <Segment
@@ -22,7 +22,7 @@ const LoginForm = () => {
       <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as='h2' className="loginForm__header" textAlign='center'>
-            {icon} Enter your store
+            {iconDoor} Enter your store
           </Header>
           <Form size='large'>
             <Segment stacked>

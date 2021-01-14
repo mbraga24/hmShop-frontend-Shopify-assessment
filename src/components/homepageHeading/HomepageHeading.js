@@ -13,25 +13,15 @@ const HomepageHeading = ({ headers, userLoggedIn }) => {
 
   return(
     <Container text className="homepageHeading">
-      <Header
-        className="homepageHeading__mainHeader"
-        as='h1'
-        content={headers.header}
-        inverted={!userLoggedIn}
-      />
-      <Header
-        className="homepageHeading__callAction"
-        as='h2'
-        content={headers.callAction}
-        inverted={!userLoggedIn}
-      />
+      <h1 className="homepageHeading__mainHeader">{headers.header}</h1>
+      <h2 className="homepageHeading__callAction">{headers.callAction}</h2>
       {
       !userLoggedIn &&
         <div>
           <Button as={Link} to="/signup" primary size='huge'>
             {headers.buttonOne} {iconStore}
           </Button>
-          <Button as={Link} to="/signup" positive size='huge'>
+          <Button as={Link} to="/login" positive size='huge'>
             {headers.buttonTwo} {iconDoor}
           </Button>
         </div>

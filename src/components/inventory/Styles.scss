@@ -1,3 +1,17 @@
 .inventory {
   display: inline-block;
+
+  &__innerContainer {
+    width: 75%;
+    margin: 3em auto;
+  }
+
+  &__imageHolder {
+    margin: 0 auto;
+  }
+
+  &__imageFields {
+    width: 50%;
+    margin: 0 auto;
+  }
 }

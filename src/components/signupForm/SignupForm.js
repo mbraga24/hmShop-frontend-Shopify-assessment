@@ -9,7 +9,7 @@ import './Styles.scss';
 
 const SingupForm = () => {
 
-  const icon = <FontAwesomeIcon icon={faStoreAlt} size="x2" />
+  const iconStore = <FontAwesomeIcon icon={faStoreAlt} size="2x" />
 
   return (
     <Segment
@@ -22,7 +22,7 @@ const SingupForm = () => {
       <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as='h2' className="loginForm__header" textAlign='center'>
-            {icon} Create your store
+            {iconStore} Create your store
           </Header>
           <Form size='large'>
             <Segment stacked>

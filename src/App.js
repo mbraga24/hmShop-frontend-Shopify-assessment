@@ -13,7 +13,7 @@ import './styles/App.scss';
 
 const App = () => {
 
-  const [ userLoggedIn, setUserLoggedIn ] = useState(false);
+  const [ userLoggedIn, setUserLoggedIn ] = useState(true);
   const [ fixed, setFixed ] = useState(false)
 
   return (
