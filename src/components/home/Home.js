@@ -11,8 +11,7 @@ const Home = ({ setFixed, userLoggedIn }) => {
   let headers = {}
 
   if (userLoggedIn) {
-    let name = "Marlon!";
-    headers.header = `Hello ${name}`;
+    headers.header = `Hello ${userLoggedIn.first_name}`;
     headers.callAction = "Take your business anywhere.";
   } else {
     headers.header = "HmShop";
@@ -34,7 +33,7 @@ const Home = ({ setFixed, userLoggedIn }) => {
           inverted={!userLoggedIn}
           style={{ minHeight: 700,  padding: '1em 0em' }}
           vertical
-        > 
+        >
           <HomepageHeading headers={headers} userLoggedIn={userLoggedIn}/>
         </Segment>
       </Visibility>

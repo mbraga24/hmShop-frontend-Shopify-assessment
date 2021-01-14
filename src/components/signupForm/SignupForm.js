@@ -1,15 +1,70 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import React, { useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { Button, Form, Grid, Header, Message, Segment, List } from 'semantic-ui-react'
+import useFormFields from '../../hooks/useFormFields';
+import { signup } from '../../api'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStoreAlt } from '@fortawesome/free-solid-svg-icons'
 
 import './Styles.scss';
 
-const SingupForm = () => {
+const SingupForm = ({ setUserLoggedIn, handleSignupTasks, history }) => {
+
+  const [ alertStatus, setAlertStatus ] = useState(false)
+  const [ header, setHeader ] = useState("");
+  const [ errorMsg, setErrorMsg ] = useState([]);
+  const [ fields, handleFields ] = useFormFields({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: ""
+  });
 
   const iconStore = <FontAwesomeIcon icon={faStoreAlt} size="2x" />
+  
+
+  const runAlert = (header, error) => {
+    setHeader(header);
+    setErrorMsg(error);
+    setAlertStatus(true);
+    resetAlert();
+  }
+
+  const resetAlert = () => {
+    setTimeout(() => {
+      setAlertStatus(false);
+    }, 5000);
+  }
+
+  const displayAlert = errors => {
+    return errors.map((e, i) => (
+      <List.Item key={e}>{e}</List.Item>
+    ));
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    
+    const formatData = {
+      first_name: fields.firstName,
+      last_name: fields.lastName,
+      email: fields.email,
+      password: fields.password
+    }
+
+    signup(formatData).then(data => {
+      if (data.error) {
+        const { error, header } = data;
+        runAlert(header, error);
+      } else {
+        const { user, success } = data;
+        handleSignupTasks(success, user)
+        history.push("/")
+      }
+    })
+  }
+
 
   return (
     <Segment
@@ -24,17 +79,40 @@ const SingupForm = () => {
           <Header as='h2' className="loginForm__header" textAlign='center'>
             {iconStore} Create your store
           </Header>
-          <Form size='large'>
+          <Form size='large' onSubmit={handleSubmit}>
             <Segment stacked>
-              <Form.Input fluid icon='hand point right' iconPosition='left' placeholder='First Name' />
-              <Form.Input fluid icon='hand point right' iconPosition='left' placeholder='Last Name' />
-              <Form.Input fluid icon='mail' iconPosition='left' placeholder='E-mail address' />
+              <Form.Input 
+                name="firstName"
+                fluid 
+                icon='hand point right' 
+                iconPosition='left' 
+                placeholder='First Name' 
+                onChange={handleFields}
+                />
+              <Form.Input 
+                name="lastName"
+                fluid 
+                icon='hand point right' 
+                iconPosition='left' 
+                placeholder='Last Name' 
+                onChange={handleFields}
+                />
+              <Form.Input 
+                name="email"
+                fluid 
+                icon='mail' 
+                iconPosition='left' 
+                placeholder='E-mail address' 
+                onChange={handleFields}
+                />
               <Form.Input
+                name="password"
+                type='password'
                 fluid
                 icon='lock'
                 iconPosition='left'
                 placeholder='Password'
-                type='password'
+                onChange={handleFields}
               />
 
               <Button color='blue' fluid size='large'>
@@ -42,6 +120,22 @@ const SingupForm = () => {
               </Button>
             </Segment>
           </Form>
+            { 
+              alertStatus &&
+              <Message warning attached='bottom'>
+                { 
+                  alertStatus && 
+                  <div>
+                    <Header as='h5' dividing>
+                      {header}
+                    </Header>
+                    <List bulleted style={{ textAlign: "left" }}>
+                      { displayAlert(errorMsg) }
+                    </List>
+                  </div>
+                }
+              </Message>
+            }
           <Message>
             Already a user? <Link to="/login">Log in</Link> or return <Link to="/">Home</Link>
           </Message>
@@ -50,4 +144,4 @@ const SingupForm = () => {
     </Segment>
   );
 }
-export default SingupForm;
+export default withRouter(SingupForm);
