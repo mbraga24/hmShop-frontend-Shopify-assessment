@@ -46,13 +46,6 @@ const Navbar = ({ fixed, userLoggedIn }) => {
 
             <Menu.Item 
               as={Link}
-              to="/profile" 
-              name="profile"
-              active={activeItem === 'profile'}
-              onClick={handleItemClick}>Profile</Menu.Item>
-
-            <Menu.Item 
-              as={Link}
               to="/inventory"
               name="inventory"
               active={activeItem === 'inventory'}

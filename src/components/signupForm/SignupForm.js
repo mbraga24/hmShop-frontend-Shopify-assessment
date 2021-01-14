@@ -9,7 +9,7 @@ import './Styles.scss';
 
 const SingupForm = () => {
 
-  const icon = <FontAwesomeIcon icon={faStoreAlt} />
+  const icon = <FontAwesomeIcon icon={faStoreAlt} size="x2" />
 
   return (
     <Segment

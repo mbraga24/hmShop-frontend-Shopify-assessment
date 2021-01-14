@@ -1,7 +1,6 @@
 import React from 'react';
 import { Segment, Visibility } from 'semantic-ui-react';
 import HomepageHeading from '../homepageHeading/HomepageHeading';
-import Products from '../products/Products';
 
 import './Styles.scss';
 
@@ -9,16 +8,17 @@ const Home = ({ setFixed, userLoggedIn }) => {
 
   const hideFixedMenu = () => setFixed(false)
   const showFixedMenu = () => setFixed(true)
-  let headers = []
+  let headers = {}
 
   if (userLoggedIn) {
-    let name = "Marlon!"
-    headers.push(`Hey ${name}`)
-    headers.push("Take your business anywhere.")
+    let name = "Marlon!";
+    headers.header = `Hello ${name}`;
+    headers.callAction = "Take your business anywhere.";
   } else {
-    headers.push("Homify")
-    headers.push("Your business anywhere...")
-    headers.push("Create store")
+    headers.header = "HmShop";
+    headers.callAction = "Build, shop, manage, and more. From anywhere.";
+    headers.buttonOne = "Create store";
+    headers.buttonTwo = "Check your store";
   }
 
     return (

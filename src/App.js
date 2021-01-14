@@ -14,17 +14,16 @@ import './styles/App.scss';
 
 const App = () => {
 
-  const [ userLoggedIn, setUserLoggedIn ] = useState(true);
+  const [ userLoggedIn, setUserLoggedIn ] = useState(false);
   const [ fixed, setFixed ] = useState(false)
 
   return (
     <div className="App">
       <Navbar fixed={fixed} userLoggedIn={userLoggedIn} />
       <Switch>
-        <Route path="/inventory" render={ () => <Inventory/> } />
-        <Route path="/profile" render={ () => <Profile/> } />
+        <Route path="/inventory" render={ () => <Inventory userLoggedIn={userLoggedIn}/> } />
         <Route path="/cart" exact render={ () => <Cart/> } />
-        <Route path="/products" exact render={ () => <Products/> } />
+        <Route path="/products" exact render={ () => <Products userLoggedIn={userLoggedIn}/> } />
         <Route path="/" exact render={ () => <Home setFixed={setFixed} userLoggedIn={userLoggedIn}/> } />
         <Route path="/login" render={ () => <LoginForm/> } />
         <Route path="/signup" render={ () => <SignupForm/> } />

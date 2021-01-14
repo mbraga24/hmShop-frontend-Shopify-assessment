@@ -1,3 +1,8 @@
 .inventory {
   display: inline-block;
+
+  &__searchInput {
+    margin: 50px auto!important;
+    width: 500px;
+  }
 }

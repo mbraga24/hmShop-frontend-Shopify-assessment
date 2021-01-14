@@ -2,28 +2,39 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Header, Icon, Container } from 'semantic-ui-react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStoreAlt, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
 import './Styles.scss';
 
 const HomepageHeading = ({ headers, userLoggedIn }) => {
+
+  const iconStore = <FontAwesomeIcon icon={faStoreAlt} size="x2" />
+  const iconDoor = <FontAwesomeIcon icon={faDoorOpen} size="x2" />
+
   return(
-    <Container text className="HomepageHeading">
+    <Container text className="homepageHeading">
       <Header
-        id="Header-1"
+        className="homepageHeading__mainHeader"
         as='h1'
-        content={headers[0]}
+        content={headers.header}
         inverted={!userLoggedIn}
       />
       <Header
-        id="Header-2"
+        className="homepageHeading__callAction"
         as='h2'
-        content={headers[1]}
+        content={headers.callAction}
         inverted={!userLoggedIn}
       />
       {
       !userLoggedIn &&
-        <Button as={Link} to="/signup" primary size='huge'>
-        {headers[2]} <Icon name='right arrow' />
-        </Button>
+        <div>
+          <Button as={Link} to="/signup" primary size='huge'>
+            {headers.buttonOne} {iconStore}
+          </Button>
+          <Button as={Link} to="/signup" positive size='huge'>
+            {headers.buttonTwo} {iconDoor}
+          </Button>
+        </div>
       }
     </Container>
   )
