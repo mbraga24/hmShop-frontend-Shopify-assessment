@@ -1,59 +1,77 @@
 import React, { useState } from 'react';
-import { Container, Grid, Image, Card, Icon, Button } from 'semantic-ui-react'
-import inventory from '../../testData';
+import { Container, Grid, Image, Form, Button, Icon } from 'semantic-ui-react'
+import CardItem from '../cardItem/CardItem';
 
+import inventory from '../../testData';
 import './Styles.scss';
 
 const Inventory = ({ userLoggedIn }) => {
 
+  const fileName = true
   const displayInventory = () => {
     return inventory.map(item => (
-      <Grid.Column key={item}>
-        <Card style={{marginBottom: "20px"}} className="inventory__card">
-          <Image src={item.image_url} wrapped ui={false} />
-          <Card.Content>
-            <Card.Header>{item.name}</Card.Header>
-            <Card.Description>
-              Price: ${item.price}
-            </Card.Description>
-            <Card.Description>
-              Qty: {item.qty}
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <a floated='left'>
-              <Icon name='user' />
-              {item.user.first_name} {item.user.last_name}
-            </a>
-            <Button floated='right' color="blue" icon>
-              <Icon name='shopping cart' />
-            </Button>
-          </Card.Content>
-          {
-            userLoggedIn &&
-            <Card.Content textAlign='center' extra>
-              <Button inverted color="red" icon>
-                <Icon name='trash' />
-              </Button>
-              <Button inverted color="green" icon>
-                <Icon name='edit' />
-              </Button>
-              <Button inverted color="blue" icon>
-                <Icon name='add' />
-              </Button>
-              <Button inverted color="orange" icon>
-                <Icon name='minus' />
-              </Button>
-            </Card.Content>
-          }
-        </Card>
-      </Grid.Column>
+      <CardItem key={item.id} item={item} userLoggedIn={userLoggedIn}/>
     ))
   }
-
     return (
       <Container className="inventory">
         <h1 style={{textAlign: "center"}}>INVENTORY</h1>
+        <div className="inventory__innerContainer">
+            <Image 
+              src='https://react.semantic-ui.com/images/wireframe/image.png' 
+              size='medium' 
+              disabled 
+              className="inventory__imageHolder"/>
+            <div className="inventory__imageFields">
+              {/* <Form onSubmit={onFormSubmit}> */}
+              <Form>
+                <Form.Field>
+                  <label>Image Upload </label>
+                  <Button type="button" as="label" htmlFor="file" animated="fade" className="Project-Archived-Button-Color">
+                    <Button.Content visible>
+                      <Icon name="file" />
+                    </Button.Content>
+                    <Button.Content hidden>Upload Image</Button.Content>
+                  </Button>
+                  <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    hidden
+                    // onChange={fileChange}
+                  />
+                  <Form.Input
+                    fluid
+                    label="File name"
+                    placeholder="Use the button above to browse your file system"
+                    readOnly
+                    // value={fileName}
+                  />
+                  <Form.Input
+                    fluid
+                    label="Product Name"
+                    placeholder="Leather Shoes"
+                    // value={fileName}
+                  />
+                  <Form.Input
+                    fluid
+                    label="Price"
+                    placeholder="$12.99"readOnly
+                    // value={fileName}
+                  />
+                  <Form.Input
+                    fluid
+                    label="Quantity"
+                    placeholder="2"readOnly
+                    // value={fileName}
+                  />
+                  <Button type="submit">
+                    Upload File
+                  </Button>    
+                </Form.Field>
+              </Form>
+            </div>
+        </div>
         <Grid>
           <Grid.Row columns={4}>
             {displayInventory()}
