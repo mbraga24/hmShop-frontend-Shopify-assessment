@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import 'semantic-ui-css/semantic.min.css'
 import { Switch, Route } from 'react-router-dom';
 import Inventory from './components/inventory/Inventory';
-import Profile from './components/profile/Profile';
 import Cart from './components/cart/Cart';
 import Products from './components/products/Products';
 import Home from './components/home/Home';
