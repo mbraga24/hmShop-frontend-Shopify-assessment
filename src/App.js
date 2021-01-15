@@ -23,9 +23,10 @@ const App = () => {
   useEffect(() => {
     if (localStorage.token) {
       autologin(localStorage.token)
-      .then(loggedInUser => {
-        const { user } = loggedInUser
-        setUserLoggedIn(user)
+      .then(data => {
+        if (!data.error) {
+          setUserLoggedIn(data.user)
+        }
       })
     }
   },[])

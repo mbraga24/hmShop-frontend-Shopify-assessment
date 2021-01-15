@@ -9,7 +9,7 @@ const Navbar = ({ history, fixed, userLoggedIn, setUserLoggedIn }) => {
   let activeRole;
   const handleLogout = () => {
     setUserLoggedIn(null)
-    localStorage.removeItem("userCredentials")
+    localStorage.removeItem("token")
     history.push("/")
   }
 
