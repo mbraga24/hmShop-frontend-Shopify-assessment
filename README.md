@@ -36,5 +36,5 @@ Loggedin seller's options
 
 <br />
 
-#### In the meantime, learn more about me on [LinkedIn](https://www.linkedin.com/in/marlon-braga/) :point_left:
+#### In the meantime, learn more about me on [LinkedIn](https://www.linkedin.com/in/marlon-braga/) :point_left: :hugs:
 
