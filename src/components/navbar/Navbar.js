@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Button, Menu, Container, Icon } from 'semantic-ui-react';
 
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import './Styles.scss';
 
-const Navbar = ({ fixed, userLoggedIn }) => {
+const Navbar = ({ history, fixed, userLoggedIn, setUserLoggedIn }) => {
 
-  const cartIcon = <FontAwesomeIcon icon={faShoppingCart} size="2x"/>
+  let activeRole;
+  const handleLogout = () => {
+    setUserLoggedIn(null)
+    localStorage.removeItem("userCredentials")
+    history.push("/")
+  }
+
+  if (userLoggedIn) {
+    activeRole = true
+  } else {
+    activeRole = false
+  }
+
   const [ activeItem, setActiveItem ] = useState('home')
 
   const handleItemClick = (e, { name }) => {
@@ -20,10 +29,10 @@ const Navbar = ({ fixed, userLoggedIn }) => {
 
     <Menu
       fixed={fixed ? 'top' : null}
-      inverted={!userLoggedIn}
+      inverted={!activeRole}
       pointing={!fixed}
       secondary={!fixed}
-      className={`${userLoggedIn ? "inactiveUser" : "activeUser" } navbar`}
+      className={`${activeRole ? "inactiveUser" : "activeUser" } navbar`}
       size='large'
     >
       <Container>
@@ -35,7 +44,7 @@ const Navbar = ({ fixed, userLoggedIn }) => {
           onClick={handleItemClick}>Home</Menu.Item>
 
         {
-          userLoggedIn && 
+          activeRole && 
           <>
             <Menu.Item 
               as={Link}
@@ -54,8 +63,8 @@ const Navbar = ({ fixed, userLoggedIn }) => {
         }
         <Menu.Item position='right'>
           {
-            !userLoggedIn ?
-            <Button as={Link} to="/login" inverted={!userLoggedIn} primary={userLoggedIn}>
+            !activeRole ?
+            <Button as={Link} to="/login" inverted={!activeRole} primary={activeRole}>
               Log in
             </Button> :
             <Button as={Link} to="/cart" animated='vertical' inverted secondary={true}>
@@ -67,16 +76,17 @@ const Navbar = ({ fixed, userLoggedIn }) => {
           }
             <Button 
               as={Link} 
-              to={`${userLoggedIn ? "/" : "/signup"}`} 
-              color={`${userLoggedIn && "purple"}`} 
+              to={`${activeRole ? "/" : "/signup"}`} 
+              color={`${activeRole ? "purple" : null}`} 
               inverted={true} 
-              secondary={userLoggedIn}
+              secondary={activeRole}
+              onClick={activeRole ? handleLogout : null}
               className="navbar__multifunctionBtn"> 
-                {userLoggedIn ? "Log out" : "Sign Up"}
+                {activeRole ? "Log out" : "Sign Up"}
               </Button>
         </Menu.Item>
       </Container>
     </Menu>
   );
 }
-export default Navbar;
+export default withRouter(Navbar);

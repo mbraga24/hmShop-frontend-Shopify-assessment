@@ -8,8 +8,8 @@ import './Styles.scss';
 
 const HomepageHeading = ({ headers, userLoggedIn }) => {
 
-  const iconStore = <FontAwesomeIcon icon={faStoreAlt} size="x2" />
-  const iconDoor = <FontAwesomeIcon icon={faDoorOpen} size="x2" />
+  const iconStore = <FontAwesomeIcon icon={faStoreAlt} size="1x" />
+  const iconDoor = <FontAwesomeIcon icon={faDoorOpen} size="1x" />
 
   return(
     <Container text className="homepageHeading">

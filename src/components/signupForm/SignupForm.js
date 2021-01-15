@@ -56,7 +56,8 @@ import './Styles.scss';
         const { error, header } = data;
         runAlert(header, error);
       } else {
-        const { user, success } = data;
+        const { user, token, success } = data;
+        localStorage.token = token
         handleCredentialsTasks(success, user)
         history.push("/")
       }

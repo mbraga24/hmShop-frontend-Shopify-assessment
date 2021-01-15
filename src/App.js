@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'semantic-ui-css/semantic.min.css'
 import { Switch, Route } from 'react-router-dom';
 import Inventory from './components/inventory/Inventory';
@@ -9,18 +9,26 @@ import LoginForm from './components/loginForm/LoginForm';
 import SignupForm from './components/signupForm/SignupForm';
 import Navbar from './components/navbar/Navbar';
 
+import { autologin } from './api'
 import { Message } from 'semantic-ui-react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGlassCheers } from '@fortawesome/free-solid-svg-icons'
 import './styles/App.scss';
 
 const App = () => {
 
-  const iconCelebration = <FontAwesomeIcon icon={faGlassCheers} size="2x" />
   const [ welcomeMessage, setWelcomeMessage ] = useState("");
   const [ userLoggedIn, setUserLoggedIn ] = useState(null);
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ fixed, setFixed ] = useState(false)
+
+  useEffect(() => {
+    if (localStorage.token) {
+      autologin(localStorage.token)
+      .then(loggedInUser => {
+        const { user } = loggedInUser
+        setUserLoggedIn(user)
+      })
+    }
+  },[])
 
   const resetAlert = () => {
     setTimeout(() => {
@@ -41,10 +49,9 @@ const App = () => {
 
   return (
     <div className="App">
-      <Navbar fixed={fixed} userLoggedIn={userLoggedIn} />
+      <Navbar fixed={fixed} userLoggedIn={userLoggedIn} setUserLoggedIn={setUserLoggedIn} />
       { (userLoggedIn && alertStatus) &&
-        <Message icon onDismiss={handleDismiss}>
-          {iconCelebration}
+        <Message size="huge" onDismiss={handleDismiss}>
           <Message.Content>
             <Message.Header>{welcomeMessage}</Message.Header>
           </Message.Content>
