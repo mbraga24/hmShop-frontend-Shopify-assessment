@@ -32,7 +32,7 @@ const App = () => {
     setAlertStatus(false);
   }
 
-  const handleSignupTasks = (message, user) => {
+  const handleCredentialsTasks = (message, user) => {
     setWelcomeMessage(message);
     setUserLoggedIn(user)
     setAlertStatus(true);
@@ -55,8 +55,8 @@ const App = () => {
         <Route path="/cart" exact render={ () => <Cart/> } />
         <Route path="/products" exact render={ () => <Products userLoggedIn={userLoggedIn}/> } />
         <Route path="/" exact render={ () => <Home setFixed={setFixed} userLoggedIn={userLoggedIn}/> } />
-        <Route path="/login" render={ () => <LoginForm/> } />
-        <Route path="/signup" render={ () => <SignupForm handleSignupTasks={handleSignupTasks} setUserLoggedIn={setUserLoggedIn}/> } />
+        <Route path="/login" render={ () => <LoginForm handleCredentialsTasks={handleCredentialsTasks}/> } />
+        <Route path="/signup" render={ () => <SignupForm handleCredentialsTasks={handleCredentialsTasks} setUserLoggedIn={setUserLoggedIn}/> } />
       </Switch>
     </div>
   );

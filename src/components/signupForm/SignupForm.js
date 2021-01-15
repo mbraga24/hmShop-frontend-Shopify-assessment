@@ -9,8 +9,9 @@ import { faStoreAlt } from '@fortawesome/free-solid-svg-icons'
 
 import './Styles.scss';
 
-const SingupForm = ({ setUserLoggedIn, handleSignupTasks, history }) => {
+  const SingupForm = ({ history, setUserLoggedIn, handleCredentialsTasks }) => {
 
+  const iconStore = <FontAwesomeIcon icon={faStoreAlt} size="2x" />
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ header, setHeader ] = useState("");
   const [ errorMsg, setErrorMsg ] = useState([]);
@@ -20,10 +21,7 @@ const SingupForm = ({ setUserLoggedIn, handleSignupTasks, history }) => {
     email: "",
     password: ""
   });
-
-  const iconStore = <FontAwesomeIcon icon={faStoreAlt} size="2x" />
   
-
   const runAlert = (header, error) => {
     setHeader(header);
     setErrorMsg(error);
@@ -44,7 +42,7 @@ const SingupForm = ({ setUserLoggedIn, handleSignupTasks, history }) => {
   }
 
   const handleSubmit = e => {
-    e.preventDefault()
+    e.preventDefault();
     
     const formatData = {
       first_name: fields.firstName,
@@ -59,7 +57,7 @@ const SingupForm = ({ setUserLoggedIn, handleSignupTasks, history }) => {
         runAlert(header, error);
       } else {
         const { user, success } = data;
-        handleSignupTasks(success, user)
+        handleCredentialsTasks(success, user)
         history.push("/")
       }
     })
