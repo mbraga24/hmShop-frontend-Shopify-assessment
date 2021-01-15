@@ -9,7 +9,7 @@ This client side will connect with this [backend](https://github.com/mrdbrg/Shop
 
 <br />
 
-## Project sneak peek 🙈
+## Project sneak peek :eyes:
 
 Home page
 ![Preview-1](https://res.cloudinary.com/dloh9txdc/image/upload/v1610680028/General%20Projects/Screen_Shot_2021-01-14_at_10.01.25_PM_zuydvb.png)
