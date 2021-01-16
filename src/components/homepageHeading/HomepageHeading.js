@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Header, Icon, Container } from 'semantic-ui-react';
+import { Button, Container } from 'semantic-ui-react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStoreAlt, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
 import './Styles.scss';
 
-const HomepageHeading = ({ headers, userLoggedIn }) => {
+const HomepageHeading = ({ headers, currentUser }) => {
 
   const iconStore = <FontAwesomeIcon icon={faStoreAlt} size="1x" />
   const iconDoor = <FontAwesomeIcon icon={faDoorOpen} size="1x" />
@@ -16,7 +16,7 @@ const HomepageHeading = ({ headers, userLoggedIn }) => {
       <h1 className="homepageHeading__mainHeader">{headers.header}</h1>
       <h2 className="homepageHeading__callAction">{headers.callAction}</h2>
       {
-      !userLoggedIn &&
+      !currentUser &&
         <div>
           <Button as={Link} to="/signup" primary size='huge'>
             {headers.buttonOne} {iconStore}

@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { Container, Grid, Image, Card, Icon, Form, Button } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
+import { Container, Grid, Form } from 'semantic-ui-react';
 import CardItem from '../cardItem/CardItem';
 
-import inventory from '../../testData';
 import './Styles.scss';
 
-const Product = ({ userLoggedIn }) => {
+const Product = () => {
+
+  const currentUser = useSelector(state => state.app.currentUser);
+  const products = useSelector(state => state.product.products);
 
   const displayInventory = () => {
-    return inventory.map(item => (
-      <CardItem key={item.id} item={item} userLoggedIn={userLoggedIn}/>
+    return products.map(item => (
+      <CardItem key={item.id} item={item} currentUser={currentUser}/>
     ))
   }
 

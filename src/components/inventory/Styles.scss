@@ -2,12 +2,13 @@
   display: inline-block;
 
   &__innerContainer {
-    width: 75%;
+    display: flex;
     margin: 3em auto;
   }
 
   &__imageHolder {
-    margin: 0 auto;
+    margin: 0 auto!important;
+
   }
 
   &__imageFields {

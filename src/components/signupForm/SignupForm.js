@@ -1,45 +1,25 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { Button, Form, Grid, Header, Message, Segment, List } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import useFormFields from '../../hooks/useFormFields';
-import { signup } from '../../api'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStoreAlt } from '@fortawesome/free-solid-svg-icons'
-
+import { signup } from '../../api'
+import { LOGGED_IN } from '../../store/type';
 import './Styles.scss';
 
-  const SingupForm = ({ history, setUserLoggedIn, handleCredentialsTasks }) => {
+  const SingupForm = ({ history, handleCredentialsTasks, runAlert, credentialsAlert, alertStatus }) => {
 
   const iconStore = <FontAwesomeIcon icon={faStoreAlt} size="2x" />
-  const [ alertStatus, setAlertStatus ] = useState(false)
-  const [ header, setHeader ] = useState("");
-  const [ errorMsg, setErrorMsg ] = useState([]);
+  const dispatch = useDispatch()
   const [ fields, handleFields ] = useFormFields({
     firstName: "",
     lastName: "",
     email: "",
     password: ""
   });
-  
-  const runAlert = (header, error) => {
-    setHeader(header);
-    setErrorMsg(error);
-    setAlertStatus(true);
-    resetAlert();
-  }
-
-  const resetAlert = () => {
-    setTimeout(() => {
-      setAlertStatus(false);
-    }, 5000);
-  }
-
-  const displayAlert = errors => {
-    return errors.map((e, i) => (
-      <List.Item key={e}>{e}</List.Item>
-    ));
-  }
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -57,13 +37,13 @@ import './Styles.scss';
         runAlert(header, error);
       } else {
         const { user, token, success } = data;
-        localStorage.token = token
-        handleCredentialsTasks(success, user)
-        history.push("/")
+        localStorage.token = token;
+        dispatch({ type: LOGGED_IN, payload: user });
+        handleCredentialsTasks(success);
+        history.push("/dashboard");
       }
     })
   }
-
 
   return (
     <Segment
@@ -119,22 +99,7 @@ import './Styles.scss';
               </Button>
             </Segment>
           </Form>
-            { 
-              alertStatus &&
-              <Message warning attached='bottom'>
-                { 
-                  alertStatus && 
-                  <div>
-                    <Header as='h5' dividing>
-                      {header}
-                    </Header>
-                    <List bulleted style={{ textAlign: "left" }}>
-                      { displayAlert(errorMsg) }
-                    </List>
-                  </div>
-                }
-              </Message>
-            }
+            {alertStatus && credentialsAlert()}
           <Message>
             Already a user? <Link to="/login">Log in</Link> or return <Link to="/">Home</Link>
           </Message>

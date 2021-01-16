@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Button, Menu, Container, Icon } from 'semantic-ui-react';
 
+import { LOGGED_IN } from '../../store/type';
 import './Styles.scss';
 
-const Navbar = ({ history, fixed, userLoggedIn, setUserLoggedIn }) => {
+const Navbar = ({ history, fixed }) => {
+  
+  const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.app.currentUser);
 
   let activeRole;
   const handleLogout = () => {
-    setUserLoggedIn(null)
-    localStorage.removeItem("token")
-    history.push("/")
+    dispatch({ type: LOGGED_IN, payload: null });
+    localStorage.removeItem("token");
+    history.push("/");
   }
 
-  if (userLoggedIn) {
+  if (currentUser) {
     activeRole = true
   } else {
     activeRole = false
@@ -32,27 +37,29 @@ const Navbar = ({ history, fixed, userLoggedIn, setUserLoggedIn }) => {
       inverted={!activeRole}
       pointing={!fixed}
       secondary={!fixed}
-      className={`${activeRole ? "inactiveUser" : "activeUser" } navbar`}
+      className={`${activeRole ? "activeUser" : "inactiveUser" } navbar`}
       size='large'
     >
       <Container>
-        <Menu.Item 
-          as={Link} 
-          to="/"
-          name="home"
-          active={activeItem === 'home'}
-          onClick={handleItemClick}>Home</Menu.Item>
+        <>
+          <Menu.Item 
+            as={Link} 
+            to="/"
+            name="home"
+            active={activeItem === 'home'}
+            onClick={handleItemClick}>Home</Menu.Item>
+        </>
 
         {
           activeRole && 
           <>
-            <Menu.Item 
+          <Menu.Item 
               as={Link}
               to="/products"
               name="products"
               active={activeItem === 'products'}
               onClick={handleItemClick}>Products</Menu.Item> {/* The MAY or MAY NOT have access to all products */}
-
+              
             <Menu.Item 
               as={Link}
               to="/inventory"

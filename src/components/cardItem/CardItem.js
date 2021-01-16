@@ -3,24 +3,26 @@ import { Modal, Header, Grid, Image, Card, Icon, Button } from 'semantic-ui-reac
 
 import './Styles.scss';
 
-const CardItem = ({ item, userLoggedIn }) => {
+const CardItem = ({ item, currentUser }) => {
 
   const [ open, setOpen ] = useState(false);
 
     return (
-      <Grid.Column className="cardItem">
-        <Card style={{marginBottom: "20px"}} className="cardItem__card">
-          <Image src={item.image_url} wrapped ui={false} />
+
+      <Grid.Column className="cardItem" id="cardContainer">
+        <Card className="cardItem__card">
+          <div  role="img" 
+                aria-label={item.title}
+                title={item.title}
+                className="cardItem__image" 
+                style={{backgroundImage: `url(${item.image_url})` }} />
           <Card.Content>
             <Card.Header>{item.name}</Card.Header>
             <Card.Description>
               Price: ${item.price}
             </Card.Description>
             <Card.Description>
-              Qty: {item.qty}
-              <Button floated='right' color="blue" icon>
-                <Icon name='shopping cart' />
-              </Button>
+              Qty: 2
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
@@ -28,9 +30,12 @@ const CardItem = ({ item, userLoggedIn }) => {
               <Icon name='user' />
               {item.user.first_name} {item.user.last_name}
             </a>
+            <Button floated='right' color="blue" icon>
+              <Icon name='shopping cart' />
+            </Button>
           </Card.Content>
           {
-            userLoggedIn &&
+            false &&
             <Card.Content textAlign='center' extra>
               <Modal
                 closeIcon
