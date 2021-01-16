@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Container, Grid, Button } from 'semantic-ui-react'
 import CardItem from '../cardItem/CardItem';
-import AddProductForm from '../addProductForm/AddProductForm'
+import ProductForm from '../aproductForm/ProductForm'
 
 import './Styles.scss';
 
@@ -20,7 +20,7 @@ const Inventory = () => {
 
   const addFormOnClick = e => {
     let formNumber = productFormList.length
-    setProductFormList(productFormList.concat(<AddProductForm 
+    setProductFormList(productFormList.concat(<ProductForm 
             key={formNumber} 
             formNumber={formNumber} 
             click={() => handleDeleteComponent(formNumber)}

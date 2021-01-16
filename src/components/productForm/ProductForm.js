@@ -6,7 +6,7 @@ import useFormFields from '../../hooks/useFormFields';
 import { newProduct } from '../../api';
 import './Styles.scss';
 
-const AddProductForm = ({ formNumber, click }) => {
+const ProductForm = ({ formNumber, click }) => {
 
   let disableName;
   const [ imageLoader, setImageLoader ] = useState(false)
@@ -57,8 +57,8 @@ const AddProductForm = ({ formNumber, click }) => {
   }
 
     return (
-    <Container className="addProductForm">
-      <div className="addProductForm__innerContainer">
+    <Container className="productForm">
+      <div className="productForm__innerContainer">
         <Card>
         {imageLoader ? 
           <Card.Content>
@@ -77,7 +77,7 @@ const AddProductForm = ({ formNumber, click }) => {
           </Card.Content>
         }
         </Card>
-        <div className="addProductForm__imageFields">
+        <div className="productForm__imageFields">
           <Form onSubmit={onFormSubmit}>
             <Form.Field>
               <input
@@ -133,4 +133,4 @@ const AddProductForm = ({ formNumber, click }) => {
   )
 }
 
-export default AddProductForm;
+export default ProductForm;
