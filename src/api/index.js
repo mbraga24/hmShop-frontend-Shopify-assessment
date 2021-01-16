@@ -19,10 +19,26 @@ export const loginUser = data => {
 }
 
 export const autologin = userToken => {
-  return fetch(`http://localhost:3000/api/v1/autologin`, {
+  return fetch("http://localhost:3000/api/v1/autologin", {
     headers: {
       'Authorization': `Bearer ${userToken}`
     }
   })
   .then(r => r.json())
+}
+
+export const getProducts = () => {
+  return fetch("http://localhost:3000/api/v1/products")
+  .then(r => r.json())
+}
+
+export const newProduct = (formData, userToken) => {
+
+  return fetch("http://localhost:3000/api/v1/products", {
+    method: "POST",
+    headers: {
+      'Authorization': `Bearer ${userToken}`
+    },
+    body: formData
+  })
 }
