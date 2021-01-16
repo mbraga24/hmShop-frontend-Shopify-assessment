@@ -1,18 +1,9 @@
 .inventory {
   display: inline-block;
 
-  &__innerContainer {
+  &__buttonWrapper {
     display: flex;
-    margin: 3em auto;
-  }
-
-  &__imageHolder {
-    margin: 0 auto!important;
-
-  }
-
-  &__imageFields {
-    width: 50%;
-    margin: 0 auto;
+    justify-content: center;
+    margin: 50px 0;
   }
 }
