@@ -13,7 +13,7 @@ const Cart = () => {
   const displayOrders = () => {
     return orders.map(order => (
       <Grid.Column key={`${order.product.name}-${order.product.price}`}>
-        <OrderItem product={order.product} currentUser={currentUser}/>
+        <OrderItem order={order} currentUser={currentUser}/>
       </Grid.Column>
     ))
   }

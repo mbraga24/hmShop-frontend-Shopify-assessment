@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, Header, Grid, Card, Icon, Button } from 'semantic-ui-react'
 
@@ -6,20 +6,19 @@ import { deleteProduct } from '../../api';
 import { REMOVE_PRODUCT, SET_BANNER } from '../../store/type';
 import './Styles.scss';
 
-const OrderItem = ({ product = null, currentUser }) => {
+const OrderItem = ({ order, currentUser }) => {
 
-  console.log(product)
+  // console.log("OrderItem", product)
 
   const [ open, setOpen ] = useState(false);
   const [ loader, setLoader ] = useState(false);
-  const { user } = product
-  const { first_name, last_name } = user
-  const sellerFullName = `${first_name} ${last_name}`
-  const dispatch = useDispatch()
+  const { product, buyer, seller } = order
+  const sellerName = `${seller.first_name} ${seller.last_name}`
+  // useEffect(() => {
+  // }, [])
 
-  // ============================================================
-  //                     BUG ON SERIALIZER
-  // ============================================================
+  // const { first_name, last_name } = user
+  // const dispatch = useDispatch()
 
   // const handleDelete = () => {
   //   setLoader(true)
@@ -39,7 +38,6 @@ const OrderItem = ({ product = null, currentUser }) => {
   // }
 
     return (
-
       <Grid.Column className="orderItem" id="cardContainer">
         <Card className="orderItem__card">
           <div  role="img" 
@@ -59,7 +57,7 @@ const OrderItem = ({ product = null, currentUser }) => {
           <Card.Content extra>
             <a floated='left'>
               <Icon name='user' />
-              {sellerFullName}
+              {sellerName}
             </a>
           </Card.Content>
           {
@@ -72,7 +70,7 @@ const OrderItem = ({ product = null, currentUser }) => {
                 open={open}
                 trigger={
                   <Button inverted color="red" icon>
-                    <Icon name='trash' />
+                    <Icon name='cancel' />
                   </Button>
                 }
                 onClose={() => setOpen(false)}
@@ -81,7 +79,7 @@ const OrderItem = ({ product = null, currentUser }) => {
                 <Header icon='trash' content='Please confirm' />
                 <Modal.Content>
                   <p>
-                    Are you sure you want to delete this product?
+                    Are you sure you want to remove this item from your cart?
                   </p>
                 </Modal.Content>
                 <Modal.Actions>
@@ -91,7 +89,6 @@ const OrderItem = ({ product = null, currentUser }) => {
                     <Icon name='remove' /> No
                   </Button>
                   }
-                  {/* <Button color='green' loading={loader} onClick={handleDelete}> */}
                   <Button color='green' loading={loader}>
                     <Icon name='checkmark' /> Yes
                   </Button>
