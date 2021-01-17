@@ -42,3 +42,8 @@ export const newProduct = (formData, userToken) => {
     body: formData
   })
 }
+
+export const queryProducts = (type, searchTerm) => {
+  return fetch(`http://localhost:3000/api/v1/products_by?type=${type}&query=${searchTerm}`)
+  .then(r => r.json())
+}
