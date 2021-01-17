@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Container, Grid, Button } from 'semantic-ui-react'
 import CardItem from '../cardItem/CardItem';
-import ProductForm from '../aproductForm/ProductForm'
+import ProductForm from '../productForm/ProductForm'
 
 import './Styles.scss';
 
@@ -10,13 +10,22 @@ const Inventory = () => {
 
   const currentUser = useSelector(state => state.app.currentUser);
   const products = useSelector(state => state.product.products);
-  const [productFormList, setProductFormList] = useState([]);
+  const [ sellerProducts, setSellerProducts] = useState([])
+  const [ productFormList, setProductFormList ] = useState([]);
 
   const handleDeleteComponent = index => {
     const productForms = [...productFormList]
     productForms.splice(index, 1);
     setProductFormList([...productForms])
   }
+
+  const findSellerProducts = useCallback(() => {
+    return products.filter(pro => pro.user.email === currentUser.email)
+  }, [products, currentUser])
+
+  useEffect(() => {
+    setSellerProducts(findSellerProducts())
+  }, [findSellerProducts])
 
   const addFormOnClick = e => {
     let formNumber = productFormList.length
@@ -28,8 +37,8 @@ const Inventory = () => {
   };
 
   const displayInventory = () => {
-    return products.map(item => (
-      <CardItem key={`${item.name}-${item.id}`} item={item} userLoggedIn={currentUser}/>
+    return sellerProducts.map(item => (
+      <CardItem key={`${item.name}-${item.id}`} item={item} currentUser={currentUser}/>
     ))
   }
 

@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Modal, Header, Grid, Image, Card, Icon, Button } from 'semantic-ui-react'
+
+import { Modal, Header, Grid, Card, Icon, Button } from 'semantic-ui-react'
 
 import './Styles.scss';
 
 const CardItem = ({ item, currentUser }) => {
 
   const [ open, setOpen ] = useState(false);
+
+  const isSeller = () => {
+    return item.user.email === currentUser.email
+  }
 
     return (
 
@@ -30,12 +35,14 @@ const CardItem = ({ item, currentUser }) => {
               <Icon name='user' />
               {item.user.first_name} {item.user.last_name}
             </a>
-            <Button floated='right' color="blue" icon>
-              <Icon name='shopping cart' />
-            </Button>
+            { !isSeller() &&
+              <Button floated='right' color="blue" icon>
+                <Icon name='shopping cart' />
+              </Button>
+            }
           </Card.Content>
           {
-            false &&
+            currentUser && isSeller() && 
             <Card.Content textAlign='center' extra>
               <Modal
                 closeIcon

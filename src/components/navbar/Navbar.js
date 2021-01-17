@@ -24,11 +24,9 @@ const Navbar = ({ history, fixed }) => {
     activeRole = false
   }
 
-  const [ activeItem, setActiveItem ] = useState('home')
+  const [ activeItem, setActiveItem ] = useState('')
 
-  const handleItemClick = (e, { name }) => {
-    setActiveItem(name)
-  }
+  const handleItemClick = (e, { name }) => { setActiveItem(name) }
 
   return (
 
@@ -44,7 +42,7 @@ const Navbar = ({ history, fixed }) => {
         <>
           <Menu.Item 
             as={Link} 
-            to="/"
+            to={currentUser ? "/dashboard" : "/"}
             name="home"
             active={activeItem === 'home'}
             onClick={handleItemClick}>Home</Menu.Item>

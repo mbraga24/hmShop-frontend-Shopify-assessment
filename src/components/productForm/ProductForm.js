@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Container, Image, Form, Button, Card, Placeholder } from 'semantic-ui-react'
 import useFormFields from '../../hooks/useFormFields';
 
+import { ADD_PRODUCT } from '../../store/type';
 import { newProduct } from '../../api';
 import './Styles.scss';
 
 const ProductForm = ({ formNumber, click }) => {
 
   let disableName;
+  const dispatch = useDispatch()
   const [ imageLoader, setImageLoader ] = useState(false)
   const [ placeholder, setPlaceholder ] = useState(null)
   const [ file, setFile ] = useState(null)
@@ -28,7 +30,6 @@ const ProductForm = ({ formNumber, click }) => {
   useEffect(() => {
     setPlaceholder("./images/placeholder-product.png")
   }, [imageLoader])
-
 
   const fileChange = e => {
     setFile(e.target.files[0]);
@@ -50,8 +51,10 @@ const ProductForm = ({ formNumber, click }) => {
 
     newProduct(formData, localStorage.token)
     .then(r => r.json())
-    .then(newProduct => {
-      console.log("newProduct", newProduct)
+    .then(data => {
+      const { product } = data
+      // console.log("newProduct", product)
+      dispatch({ type: ADD_PRODUCT, payload: product })
       setImageLoader(false)
     })
   }
@@ -122,9 +125,8 @@ const ProductForm = ({ formNumber, click }) => {
               <Button type="submit" color="blue" loading={imageLoader}>
                 Add New Product
               </Button>    
-              <Button type="button" color="red" onClick={click}>
-                Delete Form
-              </Button>    
+
+              <Button type="button" color="red" icon='cancel' onClick={click} />
             </Form.Field>
           </Form>
         </div>

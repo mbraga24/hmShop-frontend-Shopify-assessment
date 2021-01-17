@@ -35,14 +35,14 @@ const App = () => {
         }
       })
     }
-  },[])
+  },[dispatch])
 
   useEffect(() => {
     getProducts(localStorage.token)
     .then(products => {
       dispatch({ type: SET_PRODUCTS, payload: products })
     })
-  },[])
+  },[dispatch])
 
 
   const displayAlert = errors => {
