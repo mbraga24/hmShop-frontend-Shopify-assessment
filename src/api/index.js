@@ -33,7 +33,6 @@ export const getProducts = () => {
 }
 
 export const newProduct = (formData, userToken) => {
-
   return fetch("http://localhost:3000/api/v1/products", {
     method: "POST",
     headers: {
@@ -43,7 +42,26 @@ export const newProduct = (formData, userToken) => {
   })
 }
 
+export const deleteProduct = (productId, userToken) => {
+  return fetch(`http://localhost:3000/api/v1/products/${productId}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${userToken}`
+    }
+  }).then(r => r.json())
+}
+
 export const queryProducts = (type, searchTerm) => {
   return fetch(`http://localhost:3000/api/v1/products_by?type=${type}&query=${searchTerm}`)
+  .then(r => r.json())
+}
+
+export const getOrders = userToken => {
+  return fetch("http://localhost:3000/api/v1/user-orders", {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${userToken}`
+    }
+  })
   .then(r => r.json())
 }
