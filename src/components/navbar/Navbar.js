@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Button, Menu, Container, Icon } from 'semantic-ui-react';
@@ -10,8 +10,14 @@ const Navbar = ({ history, fixed }) => {
   
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.app.currentUser);
-
+  const orders = useSelector(state => state.order.orders);
   let activeRole;
+  let itemsPlurarization;
+
+  useEffect(() => {
+    itemsPlurarization = orders.length > 1 ? "Items" : "Item";
+  }, [itemsPlurarization])
+
   const handleLogout = () => {
     dispatch({ type: LOGGED_IN, payload: null });
     localStorage.removeItem("token");
@@ -43,9 +49,9 @@ const Navbar = ({ history, fixed }) => {
           <Menu.Item 
             as={Link} 
             to={currentUser ? "/dashboard" : "/"}
-            name="home"
-            active={activeItem === 'home'}
-            onClick={handleItemClick}>Home</Menu.Item>
+            name={currentUser ? "dashboard" : "home"}
+            active={activeItem === (currentUser ? "dashboard" : "home")}
+            onClick={handleItemClick}>{currentUser ? "Dashboard" : "Home"}</Menu.Item>
         </>
 
         {
@@ -73,7 +79,7 @@ const Navbar = ({ history, fixed }) => {
               Log in
             </Button> :
             <Button as={Link} to="/cart" animated='vertical' inverted secondary={true}>
-              <Button.Content hidden>10 items</Button.Content>
+              <Button.Content hidden>{orders.length} {itemsPlurarization}</Button.Content>
               <Button.Content visible>
                 <Icon name='shop' />
               </Button.Content>

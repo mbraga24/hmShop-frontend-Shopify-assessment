@@ -11,19 +11,19 @@ import Navbar from './components/navbar/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
 import 'semantic-ui-css/semantic.min.css'
 
-import { LOGGED_IN, SET_PRODUCTS } from './store/type';
-import { autologin, getProducts } from './api'
+import { LOGGED_IN, SET_ORDERS, SET_PRODUCTS } from './store/type';
+import { autologin, getProducts, getOrders } from './api'
 import { Header, Message, List } from 'semantic-ui-react';
 import './styles/App.scss';
 
 const App = () => {
 
-  const [ welcomeMessage, setWelcomeMessage ] = useState("");
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ fixed, setFixed ] = useState(false)
   const [ header, setHeader ] = useState("");
   const [ errorMsg, setErrorMsg ] = useState([]);
   const currentUser = useSelector(state => state.app.currentUser)
+  const messageBanner = useSelector(state => state.app.messageBanner)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -40,7 +40,15 @@ const App = () => {
   useEffect(() => {
     getProducts(localStorage.token)
     .then(products => {
+      console.log("PRODUCTS", products)
       dispatch({ type: SET_PRODUCTS, payload: products })
+    })
+  },[dispatch])
+
+  useEffect(() => {
+    getOrders(localStorage.token)
+    .then(orders => {
+      dispatch({ type: SET_ORDERS, payload: orders })
     })
   },[dispatch])
 
@@ -84,8 +92,7 @@ const App = () => {
     setAlertStatus(false);
   }
 
-  const handleCredentialsTasks = (message) => {
-    setWelcomeMessage(message);
+  const handleCredentialsTasks = () => {
     setAlertStatus(true);
     resetAlert();
   }
@@ -96,7 +103,7 @@ const App = () => {
       { (currentUser && alertStatus) &&
         <Message attached='bottom' size="huge" onDismiss={handleDismiss}>
           <Message.Content>
-            <Message.Header>{welcomeMessage}</Message.Header>
+            <Message.Header>{messageBanner}</Message.Header>
           </Message.Content>
         </Message>
       }

@@ -7,7 +7,7 @@ import useFormFields from '../../hooks/useFormFields';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDoorOpen } from '@fortawesome/free-solid-svg-icons'
 import { loginUser } from '../../api';
-import { LOGGED_IN } from '../../store/type';
+import { LOGGED_IN, SET_BANNER } from '../../store/type';
 import './Styles.scss';
 
 const LoginForm = ({ history, handleCredentialsTasks, runAlert, credentialsAlert, alertStatus }) => {
@@ -32,7 +32,8 @@ const LoginForm = ({ history, handleCredentialsTasks, runAlert, credentialsAlert
         const { user, token, success } = data;
         localStorage.token = token;
         dispatch({ type: LOGGED_IN, payload: user });
-        handleCredentialsTasks(success);
+        dispatch({ type: SET_BANNER, payload: success });
+        handleCredentialsTasks();
         history.push("/dashboard");
       }
     })
