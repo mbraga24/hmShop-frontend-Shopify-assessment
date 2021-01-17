@@ -47,7 +47,10 @@ const App = () => {
 
   useEffect(() => {
     getOrders(localStorage.token)
-    .then(orders => {
+    .then(data => {
+      const { orders } = data
+      // console.log("ORDERS ==>", data)
+      // console.log("ORDERS ==>", orders)
       dispatch({ type: SET_ORDERS, payload: orders })
     })
   },[dispatch])
