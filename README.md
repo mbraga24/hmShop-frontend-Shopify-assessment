@@ -72,13 +72,13 @@ Storing product images in Cloudinary <br />
 
 ## Installation
 
-#### [SiriuS - Frontend](https://github.com/mrdbrg/Shopify-frontend)
+#### [SiriuS - Frontend](https://github.com/mrdbrg/hmShop-frontend-Shopify-assessment)
 
 1. Fork this pository.
 1. Clone this repository onto your local machine.
 1. From your terminal `cd` into the project's folder.
 1. Run `npm install` to install all packages and dependencies.
-1. Follow the instructions for the [backend-end portion](https://github.com/mrdbrg/Shopify-backend) of this application. 
+1. Follow the instructions for the [backend-end portion](https://github.com/mrdbrg/hmShop-backend-Shopify-assessment/blob/main/README.md) of this application. 
 1. Run `npm start` to run the application.
 
 [Back To The Top](#hmsHop)
